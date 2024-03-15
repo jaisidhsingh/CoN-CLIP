@@ -1,0 +1,145 @@
+import torch
+import torch.nn.functional as F
+import clip
+from tqdm import tqdm
+import numpy as np
+
+from sklearn.metrics import roc_auc_score
+
+def calculate_auc(labels, preds):
+    auc_score = roc_auc_score(labels, preds)
+    return auc_score
+
+
+class CoNClipRunner():
+	def __init__(self, model_name):
+		self.model_name = model_name
+		self.device = "cuda"
+
+		# loading CoN-CLIP model from checkpoint
+		model, preprocess = clip.load("ViT-B/32", device=self.device)
+		# self.ckpt_path = f"/workspace/jaisidh/btp/checkpoints/{self.model_name}/ckpt_5_{self.model_name}.pt"
+		self.ckpt_path = f"/workspace/jaisidh/btp/checkpoints/crepe_clip_b32/ckpt_13_crepe_clip_b32.pt"
+		self.model = model.eval().float().to(self.device)
+		self.model.load_state_dict(torch.load(self.ckpt_path)["model"])
+		self.model = self.model.to(self.device)
+
+		self.tokenizer = clip.tokenize
+		self.transform = preprocess
+		self.seq_len = 77
+	
+	def embed_image(self, x):
+		# assume image has already been cast to GPU
+		image_features = self.model.encode_image(x)
+		image_features /= image_features.norm(dim=-1, keepdim=True)
+		return image_features
+	
+	def embed_text(self, x):
+		# assume text has already been cast to GPU
+		batch_size = len(x)
+		texts_tokenized = self.tokenizer(x).view(batch_size, self.seq_len).to(self.device)
+		text_features = self.model.encode_text(texts_tokenized)
+		text_features /= text_features.norm(dim=-1, keepdim=True)
+		return text_features
+
+	@torch.no_grad()
+	def score_over_loader(self, loader):
+		bar = tqdm(total=len(loader))
+		correct, total = 0, 0
+
+		for idx, (images, captions, negative_captions) in enumerate(loader):
+			batch_size = len(images)
+
+			# send inputs to GPU
+			images = [self.transform(image).unsqueeze(0) for image in images]
+			images = torch.cat(images, dim=0)	
+			images = images.to(self.device)
+
+			# forward pass
+			image_features = self.embed_image(images)
+			caption_features = self.embed_text(captions)
+			negative_caption_features = self.embed_text(negative_captions)
+
+			# get similarities across batch
+			sim1 = self.model.logit_scale * image_features @ caption_features.T # shape: BxB
+			sim2 = self.model.logit_scale * image_features @ negative_caption_features.T # shape BxB
+
+			# get similarities of only (I_i, c_i) and (I_i, c'_i)
+			preds1, preds2 = torch.diag(sim1).view(batch_size, 1), torch.diag(sim2).view(batch_size, 1) # each has shape: Bx1
+			preds_combined = torch.cat([preds1, preds2], dim=1).to(self.device)
+			preds = preds_combined.argmax(dim=1) # shape: Bx1
+
+			# true caption is at index 0 and negated caption is at index 1
+			labels = torch.zeros(batch_size).long().to(self.device)
+			correct += (preds == labels).sum().item()
+			total += batch_size
+			
+			# get accuracy of matching to the true caption c_i over c'_i for a particular I_i
+			accuracy = round(correct/total, 4) * 100
+
+			bar.update(1)
+			bar.set_postfix({"batch_index": idx, "accuracy": accuracy})
+
+		# log results	
+		tqdm.write(f"Accuracy of CoNCLIP {self.model_name}: {accuracy}")
+
+
+	@torch.no_grad()
+	def score_over_loader2(self, loader):
+		bar = tqdm(total=len(loader))
+		correct, total = [0, 0], [0, 0]
+
+		all_probs = []
+		all_labels = []
+		for idx, (positive_images, negative_images, positive_captions, negative_captions) in enumerate(loader):
+			batch_size = len(positive_images)
+
+			# send inputs to GPU
+			for polarity, images in enumerate([positive_images, negative_images]):
+				images = [self.transform(image).unsqueeze(0) for image in images]
+				images = torch.cat(images, dim=0)	
+				images = images.to(self.device)
+
+				# forward pass
+				image_features = self.embed_image(images)
+				caption_features = self.embed_text(positive_captions)
+				negative_caption_features = self.embed_text(negative_captions)
+
+				# get similarities across batch
+				sim1 = self.model.logit_scale * image_features @ caption_features.T # shape: BxB
+				sim2 = self.model.logit_scale * image_features @ negative_caption_features.T # shape BxB
+
+				# get similarities of only (I_i, c_i) and (I_i, c'_i)
+				preds1, preds2 = torch.diag(sim1).view(batch_size, 1), torch.diag(sim2).view(batch_size, 1) # each has shape: Bx1
+				preds_combined = torch.cat([preds1, preds2], dim=1).to(self.device)
+				probs = preds_combined.softmax(dim=1)[:, 1].to(self.device)
+				preds = preds_combined.argmax(dim=1) # shape: Bx1
+
+				# true caption is at index 0 and negated caption is at index 1
+				labels = torch.zeros(batch_size).long().to(self.device) + polarity
+				correct[polarity] += (preds == labels).sum().item()
+				total[polarity] += batch_size
+				all_probs.append(probs.detach().cpu().numpy())
+				all_labels.append(labels.detach().cpu().numpy())
+			
+			# get accuracy of matching to the true caption c_i over c'_i for a particular I_i
+			pos_accuracy = round(correct[0]/total[0], 4) * 100
+			neg_accuracy = round(correct[1]/total[1], 4) * 100
+			avg_accuracy = round( (correct[0]/total[0] + correct[1]/total[1]) / 2, 4) * 100
+
+			bar.update(1)
+			bar.set_postfix({"batch_index": idx,  "avg_accuracy": avg_accuracy, "pos_retrieval_accuracy": pos_accuracy, "neg_retrieval_accuracy": neg_accuracy,})
+		
+		bar.close()
+		
+		#calculate auc score
+		all_labels, all_probs = [np.concatenate(arr) for arr in [all_labels, all_probs]]
+		auc_score = calculate_auc(all_labels, all_probs)
+
+		# log results
+		tqdm.write(f"Retrieval Accuracy of CoNCLIP [**for Positives**]{self.model_name}: {pos_accuracy}")
+		tqdm.write(f"Retrieval Accuracy of CoNCLIP [**for Negatives**]{self.model_name}: {neg_accuracy}")
+		tqdm.write(f"Net accuracy: {avg_accuracy}")
+		tqdm.write(f"AUC score: {auc_score}")
+
+
