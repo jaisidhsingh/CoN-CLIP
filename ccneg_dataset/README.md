@@ -7,10 +7,9 @@ The images for CC-Neg come from the ImageLabels split of the CC-3M which we prep
 ```plaintext
 ccneg_images
 |___ cc3m_subset_images_extracted_final
-	 |___
-		 |___ image1.jpg
-		 |___ image2.jpg
-		 ...
+	 |___ image1.jpg
+         |___ image2.jpg
+         ...
 
 ```
 
