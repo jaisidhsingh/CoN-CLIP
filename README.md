@@ -62,7 +62,7 @@ with torch.no_grad():
 
 ## CC-Neg: Benchmark for Understanding of Negations
 
-Detailed instructions for downloading and setting up our CC-Neg dataset are given <a src="ccneg_dataset/README.md">here</a>. The `ccneg_dataset` directory stores this data by default.
+Detailed instructions for downloading and setting up our CC-Neg dataset are given <a href="./ccneg_dataset/README.md">here</a>. The `ccneg_dataset` directory stores this data by default.
 
 <img src="assets/ccneg-pipeline.png">
 
