@@ -76,6 +76,7 @@ import clip
 from tqdm import tqdm
 from data import CCNegEvalDataset
 from torch.utils.data import DataLoader
+import torch.nn.functional as F
 
 
 device = "cuda"
@@ -109,6 +110,8 @@ def evaluate_clip_on_ccneg():
 		image_features = model.encode_image(images) # shape: [batch_size x embedding_dim]
 		true_caption_features = model.encode_text(true_captions) # shape: [batch_size x embedding_dim]
 		negated_caption_features = model.encode_text(negated_captions) # shape: [batch_size x embedding_dim]
+		true_caption_features = F.normalize(true_caption_features, dim=-1)
+		negated_caption_features = F.normalize(negated_caption_features, dim=-1)
 
 		sim_dense_true = (model.logit_scale * image_features @ true_caption_features.T) # shape: [batch_size x batch_size]
 		sim_true = torch.diag(sim_dense_true).view(batch_size, 1) # shape: [batch_size x 1] (similarity of the image to its true caption)
