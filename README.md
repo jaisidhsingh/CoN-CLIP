@@ -1,6 +1,6 @@
 # Learning the Power of “No”: Foundation Models with Negations (WACV 2025)
 
-This repository releases the official code, checkpoints, and data for our paper (arXiv preprint can be found <a href="https://arxiv.org/abs/2403.20312">here</a>). The following provides CoN-CLIP checkpoints and usage instructions for the *ViT-L/14, ViT-B/16, and ViT-B/32* backbones of <a href="https://github.com/openai/CLIP">CLIP</a>. Our dataset CC-Neg is being prepared for release and will be added to this repository very soon.
+This repository releases the official code, checkpoints, and data for our paper (arXiv preprint can be found <a href="https://arxiv.org/abs/2403.20312">here</a>). The following provides CoN-CLIP checkpoints and usage instructions for the *ViT-L/14, ViT-B/16, and ViT-B/32* backbones of <a href="https://github.com/openai/CLIP">CLIP</a>. Our dataset CC-Neg has been prepared for release and instructions to access it are given below.
 
 <img src="assets/intro.png">
 
