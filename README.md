@@ -10,13 +10,13 @@ This repository releases the official code, checkpoints, and data for our paper 
 
 ### Checkpoints
 
-The checkpoints for CoN-CLIP are given in the table below. Note that since these are OneDrive links, it can be useful to use a command line tool given <a href="https://github.com/loribonna/onedrivedownloader">here</a>.
+The checkpoints for CoN-CLIP are given in the table below. Note that these are Proton Drive links. We are working on hosting somewhere that is more accessible via command-line.
 
 Model name        | CLIP Backbone | Checkpoint
 ----------------- | ------------- | ----------
-CoN-CLIP ViT-B/32 | ViT-B/32      | <a href="https://iitjacin-my.sharepoint.com/:u:/g/personal/singh_118_iitj_ac_in/Eb-3taJSENpIu5sL85FmJmMB1Bf9J_2DxXswgT0E24z9Ng?e=Xipvn3">Link</a>
-CoN-CLIP ViT-B/16 | ViT-B/16      | <a href="https://iitjacin-my.sharepoint.com/:u:/g/personal/singh_118_iitj_ac_in/EZYIVy01n11EvuHoT-aQCfQBWsgah2GRIOPBKrrrDPwYDQ?e=3WJiXm">Link</a>
-CoN-CLIP ViT-L/14 | ViT-L/14      | <a href="https://iitjacin-my.sharepoint.com/:u:/g/personal/singh_118_iitj_ac_in/ESfvjZ43t4hGmJkumiMk5rQB2Voz5ke_s5y12k2u6eA7ww?e=1rVc8U">Link</a>
+CoN-CLIP ViT-B/32 | ViT-B/32      | <a href="https://drive.proton.me/urls/H1034F41YM#M6nFERwJE8kL">Link</a>
+CoN-CLIP ViT-B/16 | ViT-B/16      | <a href="https://drive.proton.me/urls/G0N6PJWRDW#ZES92x7FPE4J">Link</a>
+CoN-CLIP ViT-L/14 | ViT-L/14      | <a href="https://drive.proton.me/urls/MXKZY486XG#YehnofGcLxR7">Link</a>
 
 
 ### Loading and Using CoN-CLIP
@@ -108,8 +108,11 @@ def evaluate_clip_on_ccneg():
 		negated_captions = clip.tokenize(negated_captions).to(device)
 
 		image_features = model.encode_image(images) # shape: [batch_size x embedding_dim]
+
 		true_caption_features = model.encode_text(true_captions) # shape: [batch_size x embedding_dim]
 		negated_caption_features = model.encode_text(negated_captions) # shape: [batch_size x embedding_dim]
+
+		image_features = F.normalize(image_features, dim=-1)
 		true_caption_features = F.normalize(true_caption_features, dim=-1)
 		negated_caption_features = F.normalize(negated_caption_features, dim=-1)
 
