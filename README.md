@@ -1,4 +1,4 @@
-# Learning the Power of “No”: Foundation Models with Negations (WACV 2025)
+# Learning the Power of “No”: Foundation Models with Negations (WACV 2025) [<a href="https://openaccess.thecvf.com/content/WACV2025/papers/Singh_Learning_the_Power_of_No_Foundation_Models_with_Negations_WACV_2025_paper.pdf">Paper</a>]
 
 This repository releases the official code, checkpoints, and data for our paper (arXiv preprint can be found <a href="https://arxiv.org/abs/2403.20312">here</a>). The following provides CoN-CLIP checkpoints and usage instructions for the *ViT-L/14, ViT-B/16, and ViT-B/32* backbones of <a href="https://github.com/openai/CLIP">CLIP</a>. Our dataset CC-Neg has been prepared for release and instructions to access it are given below.
 
@@ -163,12 +163,12 @@ For the compositional understanding task, our paper uses SugarCREPE, an unbiased
 If you found our work helpful in your research, please cite it using the following bibtex snippet.
 
 ```bibtex
-@misc{singh2024learn,
-      title={Learn "No" to Say "Yes" Better: Improving Vision-Language Models via Negations}, 
-      author={Jaisidh Singh and Ishaan Shrivastava and Mayank Vatsa and Richa Singh and Aparna Bharati},
-      year={2024},
-      eprint={2403.20312},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+@inproceedings{Singh_2025_WACV,
+    author    = {Singh, Jaisidh and Shrivastava, Ishaan and Vatsa, Mayank and Singh, Richa and Bharati, Aparna},
+    title     = {Learning the Power of ''No'': Foundation Models with Negations},
+    booktitle = {Proceedings of the Winter Conference on Applications of Computer Vision (WACV)},
+    month     = {February},
+    year      = {2025},
+    pages     = {7991-8001}
 }
 ```
