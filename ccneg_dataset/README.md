@@ -2,7 +2,7 @@
 
 ## CC-Neg: Images
 
-The images for CC-Neg come from the ImageLabels split of the CC-3M which we prepare and provide <a href="https://iitjacin-my.sharepoint.com/:f:/g/personal/singh_118_iitj_ac_in/EuV0PZw4pZBPnfE0LeUkKssB1waNHgSe77qOqOoiF6BHxA?e=7dJ0Mj">here</a>. Please find a compressed file called `ccneg_images.tar.gz` in this directory, download, and extract the images. Verify that the structure of the `ccneg_images` folder becomes
+The images for CC-Neg come from the ImageLabels split of the CC-3M which we prepare and provide <a href="https://drive.proton.me/urls/CPD0RPRVA4#lDBGak33rXEn">here</a>. Please find a compressed file called `ccneg_images.zip` in this directory, download, and extract the images. Verify that the structure of the `ccneg_images` folder becomes
 
 ```plaintext
 ccneg_images
@@ -15,7 +15,7 @@ ccneg_images
 
 ## CC-Neg: Annotations
 
-The annotations containing the true caption and the negated (false) caption for each image in CC-Neg can be downloaded from <a href="https://iitjacin-my.sharepoint.com/:f:/g/personal/singh_118_iitj_ac_in/EuV0PZw4pZBPnfE0LeUkKssB1waNHgSe77qOqOoiF6BHxA?e=7dJ0Mj">here</a>. This file, named `ccneg_preprocessed.pt` must be downloaded into this directory. The helper for using distractor images during fine-tuning is already provided here, named `distractor_image_mapping.pt`.
+The annotations containing the true caption and the negated (false) caption for each image in CC-Neg can be downloaded from <a href="https://drive.proton.me/urls/GC34W9VACG#xitsiMVh4HUU">here</a>. This file, named `ccneg_preprocessed.pt` must be downloaded into this directory. The helper for using distractor images during fine-tuning is provided <a href="https://drive.proton.me/urls/JAC3FBXP58#Yi2bmdl0xodv">here</a>, named `distractor_image_mapping.pt`.
 
 ## Paths for Data Configs
 
