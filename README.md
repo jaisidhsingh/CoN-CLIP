@@ -37,7 +37,7 @@ def load_checkpoint(model, checkpoint_path):
 
 
 # the .pt file downloaded from the links above
-checkpoint_path = "ckpt_5_conclip_b32.pt"
+checkpoint_path = "conclip_vit_b32.pt"
 
 device = "cuda"
 model, preprocess = clip.load("ViT-B/32", device=device)
