@@ -73,6 +73,7 @@ After setting up the dataset as per the instructions given <a href="ccneg_datase
 
 ```python
 import clip
+import torch
 from tqdm import tqdm
 from data import CCNegEvalDataset
 from torch.utils.data import DataLoader
@@ -87,12 +88,16 @@ def collate_fn(batch):
 	true_captions = [item[1][0] for item in batch]
 	negated_captions = [item[2][0] for item in batch]
 
-	return (images, true_captions, negated_captions)
+	return (torch.stack(images, 0), true_captions, negated_captions)
 
 @torch.no_grad()
 def evaluate_clip_on_ccneg():
 	model, preprocess = clip.load(model_name, device=device)
-
+	
+	# # load vlm weights here
+	# model = model.float()
+	# model.load_state_dict(torch.load("conclip_vit_b32.pt")["model"])
+	
 	ccneg_dataset = CCNegEvalDataset(transform=preprocess)
 	# (transformed_image_tensor, [true_caption], [false_caption]) = ccneg_dataset[0]
 
