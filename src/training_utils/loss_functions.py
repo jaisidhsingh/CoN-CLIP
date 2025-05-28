@@ -9,7 +9,7 @@ class CustomLoss(nn.Module):
         self.labels_dtype = torch.long
     
     def set_loss_type(self, new_loss_type):
-        self.loss_type == new_loss_type 
+        self.loss_type = new_loss_type 
 
     def get_labels(self, batch_size):
         labels = torch.arange(batch_size, dtype=self.labels_dtype)
