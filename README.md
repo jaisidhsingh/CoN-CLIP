@@ -10,13 +10,13 @@ This repository releases the official code, checkpoints, and data for our paper 
 
 ### Checkpoints
 
-The checkpoints for CoN-CLIP are given in the table below. Note that these are Proton Drive links. We are working on hosting somewhere that is more accessible via command-line.
+The Google Drive links to checkpoints for CoN-CLIP are given in the table below. 
 
 Model name        | CLIP Backbone | Checkpoint
 ----------------- | ------------- | ----------
-CoN-CLIP ViT-B/32 | ViT-B/32      | <a href="https://drive.proton.me/urls/H1034F41YM#M6nFERwJE8kL">Link</a>
-CoN-CLIP ViT-B/16 | ViT-B/16      | <a href="https://drive.proton.me/urls/G0N6PJWRDW#ZES92x7FPE4J">Link</a>
-CoN-CLIP ViT-L/14 | ViT-L/14      | <a href="https://drive.proton.me/urls/MXKZY486XG#YehnofGcLxR7">Link</a>
+CoN-CLIP ViT-B/32 | ViT-B/32      | <a href="https://drive.google.com/file/d/1st_HycYyHxUklCaLrllA-SK7QV5CYGVD/view">Link</a>
+CoN-CLIP ViT-B/16 | ViT-B/16      | <a href="https://drive.google.com/file/d/1OzePWGyEc_vElTeshUCIqJe0P8sQqyMR/view">Link</a>
+CoN-CLIP ViT-L/14 | ViT-L/14      | <a href="https://drive.google.com/file/d/10bF8l5G34mDIQuso8iBaRSvYATGe19n4/view">Link</a>
 
 
 ### Loading and Using CoN-CLIP
