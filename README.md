@@ -14,9 +14,9 @@ The Google Drive links to checkpoints for CoN-CLIP are given in the table below.
 
 Model name        | CLIP Backbone | Checkpoint
 ----------------- | ------------- | ----------
-CoN-CLIP ViT-B/32 | ViT-B/32      | <a href="https://drive.google.com/file/d/1st_HycYyHxUklCaLrllA-SK7QV5CYGVD/view">Link</a>
-CoN-CLIP ViT-B/16 | ViT-B/16      | <a href="https://drive.google.com/file/d/1OzePWGyEc_vElTeshUCIqJe0P8sQqyMR/view">Link</a>
-CoN-CLIP ViT-L/14 | ViT-L/14      | <a href="https://drive.google.com/file/d/10bF8l5G34mDIQuso8iBaRSvYATGe19n4/view">Link</a>
+CoN-CLIP ViT-B/32 | ViT-B/32      | <a href="https://huggingface.co/jaisidhsingh/conclip/blob/main/conclip_vit_b32.pt">Link</a>
+CoN-CLIP ViT-B/16 | ViT-B/16      | <a href="https://huggingface.co/jaisidhsingh/conclip/blob/main/conclip_vit_b16.pt">Link</a>
+CoN-CLIP ViT-L/14 | ViT-L/14      | <a href="https://huggingface.co/jaisidhsingh/conclip/blob/main/conclip_vit_l14.pt">Link</a>
 
 
 ### Loading and Using CoN-CLIP
