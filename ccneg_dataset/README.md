@@ -2,7 +2,7 @@
 
 ## CC-Neg: Images
 
-The images for CC-Neg come from the ImageLabels split of the CC-3M which we prepare and provide <a href="https://drive.google.com/file/d/1s3YQ_fkZqxp-sIW197SHqrgic9O0zQWR/view">here</a>. Please find a compressed file called `ccneg_images.zip` in this directory, download, and extract the images. Verify that the structure of the `ccneg_images` folder becomes
+The images for CC-Neg come from the ImageLabels split of the CC-3M which we prepare and provide <a href="https://huggingface.co/datasets/jaisidhsingh/ccneg/blob/main/ccneg_images.zip">here</a>. Please find a compressed file called `ccneg_images.zip` in this directory, download, and extract the images. Verify that the structure of the `ccneg_images` folder becomes
 
 ```plaintext
 ccneg_images
@@ -15,7 +15,7 @@ ccneg_images
 
 ## CC-Neg: Annotations
 
-The annotations containing the true caption and the negated (false) caption for each image in CC-Neg can be downloaded from <a href="https://drive.google.com/file/d/1q5LThkN-7w2MduWU-tdK7On_sC9Mnu5Q/view?usp=drive_link">here</a>. This file, named `ccneg_preprocessed.pt` must be downloaded into this directory. The helper for using distractor images during fine-tuning is provided <a href="https://drive.google.com/file/d/1qNYKPclWkYjlL5IxjC6rKRgW_8QGs0BZ/view">here</a>, named `distractor_image_mapping.pt`.
+The annotations containing the true caption and the negated (false) caption for each image in CC-Neg can be downloaded from <a href="https://huggingface.co/datasets/jaisidhsingh/ccneg/blob/main/ccneg_preprocessed.pt">here</a>. This file, named `ccneg_preprocessed.pt` must be downloaded into this directory. The helper for using distractor images during fine-tuning is provided <a href="https://huggingface.co/datasets/jaisidhsingh/ccneg/blob/main/distractor_image_mapping.pt">here</a>, named `distractor_image_mapping.pt`.
 
 ## Paths for Data Configs
 
